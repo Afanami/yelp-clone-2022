@@ -5,8 +5,6 @@ import BusinessList from "./Components/BusinessList/BusinessList";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import useLocation from "./Hooks/useLocation";
 import { LinearProgress } from "@mui/material";
-import useLocalStorage from "./Hooks/useLocalStorage";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 function App() {
   const [businesses, setBusinesses] = useState(null);
