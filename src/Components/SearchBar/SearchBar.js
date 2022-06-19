@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import { sortByOptions } from "../../Utils/Yelp";
 import "./SearchBar.css";
 import toast, { Toaster } from "react-hot-toast";
+import useLocalStorage from "../../Hooks/useLocalStorage";
 
 export default function SearchBar({ lat, long, searchYelp }) {
   const [term, setTerm] = useState(null);
   const [location, setLocation] = useState(null);
   const [sortBy, setSortBy] = useState("best_match");
-  const [offset, setOffset] = useState(0);
+  const [searchParams, setSearchParams] = useLocalStorage("searchParams", {
+    term: term,
+    location: location,
+    sortBy: sortBy,
+  });
 
   // Helper functions
   const getSortByClass = (sortByOption) => {
@@ -24,6 +29,10 @@ export default function SearchBar({ lat, long, searchYelp }) {
       (location == null || location.trim() === "")
     ) {
       return toast.error("Enter a valid business and location!");
+    }
+
+    if (term == null || term.trim() === "") {
+      return toast.error("Enter a valid business name!");
     }
 
     if (
@@ -75,14 +84,13 @@ export default function SearchBar({ lat, long, searchYelp }) {
   };
 
   const onSearchClickHandler = (event) => {
+    event.preventDefault();
     if (validateInput() === true) {
       // If location provided search places around locations
       // else search around user
-      if (location != null && location.trim() !== "") {
-        lat = 0;
-        long = 0;
-      }
-      searchYelp(term, location, sortBy, lat, long, offset);
+
+      setSearchParams({ term: term, location: location, sortBy: sortBy });
+      searchYelp(term, location, sortBy, lat, long, 0, true);
     }
   };
 
@@ -90,11 +98,9 @@ export default function SearchBar({ lat, long, searchYelp }) {
     if (event.key === "Enter") {
       if (validateInput() === true) {
         event.preventDefault();
-        if (location != null && location.trim() !== "") {
-          lat = 0;
-          long = 0;
-        }
-        searchYelp(term, location, sortBy, lat, long, offset);
+
+        setSearchParams({ term: term, location: location, sortBy: sortBy });
+        searchYelp(term, location, sortBy, lat, long, 0, true);
       }
     }
   };

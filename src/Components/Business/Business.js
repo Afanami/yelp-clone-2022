@@ -27,8 +27,10 @@ export default function Business({ business }) {
           <img src={imageSrc ? imageSrc : DEFAULT_IMAGE} alt={`${category}`} />
         </a>
       </div>
-      <h2>{name}</h2>
-      <h4> - {Math.round(distance / 100) / 10} km</h4>
+      <div className="Business-headers">
+        <h2>{name}</h2>
+        <h4>{Math.round(distance / 100) / 10} km</h4>
+      </div>
       <div className="Business-information">
         <div className="Business-address">
           <a

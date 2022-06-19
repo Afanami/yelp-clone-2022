@@ -7,42 +7,52 @@ export const sortByOptions = {
 };
 
 const CORS = "https://cors-anywhere.herokuapp.com/";
+export const LIMIT = 25;
+
 export let Yelp = {
   search: async (term, location, sortBy, latitude, longitude, offset) => {
+    let businessesData = null;
+    let error = null;
+    let total = null;
+
     try {
       const searchResponse = await fetch(
-        `${CORS}https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&sort_by=${sortBy}&latitude=${latitude}&longitude=${longitude}&offset=${offset}`,
+        `${CORS}https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&sort_by=${sortBy}&latitude=${latitude}&longitude=${longitude}&limit=${LIMIT}&offset=${offset}`,
         { headers: { Authorization: `Bearer ${API_KEY}` } }
       );
 
       if (searchResponse.ok) {
         const searchJSON = await searchResponse.json();
 
-        return (
-          searchJSON.businesses.length &&
-          searchJSON.businesses.map((business) => {
-            return {
-              id: business.id,
-              imageSrc: business.image_url,
-              name: business.name,
-              address: business.location.address1,
-              city: business.location.city,
-              state: business.location.state,
-              zipCode: business.location.zip_code,
-              distance: business.distance,
-              isClosed: business.is_closed,
-              category: business.categories[0].title,
-              rating: business.rating,
-              reviewCount: business.review_count,
-              url: business.url,
-            };
-          })
-        );
+        total = searchJSON.total;
+
+        businessesData =
+          (searchJSON.businesses.length > 0 &&
+            searchJSON.businesses.map((business) => {
+              return {
+                id: business.id,
+                imageSrc: business.image_url,
+                name: business.name,
+                address: business.location.address1,
+                city: business.location.city,
+                state: business.location.state,
+                zipCode: business.location.zip_code,
+                distance: business.distance,
+                isClosed: business.is_closed,
+                category: business.categories[0].title,
+                rating: business.rating,
+                reviewCount: business.review_count,
+                url: business.url,
+              };
+            })) ||
+          [];
       } else {
-        throw new Error(searchResponse.status);
+        throw Error(`${searchResponse.status} ${searchResponse.statusText}`);
       }
     } catch (err) {
-      return `Something went wrong ${err}`;
+      error = `${err} \n Please check your inputs are valid`;
     }
+
+    return { businessesData, error, total };
   },
 };
