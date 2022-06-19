@@ -8,7 +8,7 @@ export default function SearchBar({ lat, long, searchYelp }) {
   const [term, setTerm] = useState(null);
   const [location, setLocation] = useState(null);
   const [sortBy, setSortBy] = useState("best_match");
-  const [searchParams, setSearchParams] = useLocalStorage("searchParams", {
+  const [, setSearchParams] = useLocalStorage("searchParams", {
     term: term,
     location: location,
     sortBy: sortBy,

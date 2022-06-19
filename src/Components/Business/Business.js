@@ -13,7 +13,7 @@ export default function Business({ business }) {
     state,
     zipCode,
     distance,
-    isClosed,
+    // isClosed,
     category,
     rating,
     reviewCount,

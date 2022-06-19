@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState } from "react";
-import { Yelp, LIMIT } from "./Utils/Yelp";
+import { Yelp } from "./Utils/Yelp";
 import BusinessList from "./Components/BusinessList/BusinessList";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import useLocation from "./Hooks/useLocation";
@@ -25,7 +25,7 @@ function App() {
     searchBar
   ) => {
     setIsLoading(true);
-    let length;
+    // let length;
 
     // if (searchBar) {
     //   setCurrentOffset(0);
