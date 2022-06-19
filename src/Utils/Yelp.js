@@ -1,4 +1,4 @@
-import { API_KEY } from "../API_KEYS/API_KEYS";
+import { API_KEY } from "./API_KEYS";
 
 export const sortByOptions = {
   "Best Match": "best_match",
