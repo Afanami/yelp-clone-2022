@@ -1,23 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import BusinessList from "./Components/BusinessList/BusinessList";
+import SearchBar from "./Components/SearchBar/SearchBar";
+import { BusinessDataProvider } from "./Contexts/DataContext";
+import useLocation from "./Hooks/useLocation";
 
 function App() {
+  // console.log("Async ver: ");
+  // console.log(Yelp.search("KFC", "Frankston", "best_match", ""));
+  const { lat, long } = useLocation();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Yelp Clone</h1>
+      <SearchBar lat={lat} long={long} />
+      <BusinessList />
     </div>
   );
 }
