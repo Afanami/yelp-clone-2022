@@ -77,7 +77,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Yelp Clone</h1>
+      <h1>Yelperia</h1>
       <SearchBar lat={lat} long={long} searchYelp={searchYelp} />
       {isLoading ? (
         <LinearProgress color="success" />
