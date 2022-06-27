@@ -1,13 +1,11 @@
-import { API_KEY } from "./API_KEYS";
+const CORS = "https://cors-anywhere.herokuapp.com/";
+export const LIMIT = 25;
 
 export const sortByOptions = {
   "Best Match": "best_match",
   "Highest Rated": "rating",
   "Nearest Me": "distance",
 };
-
-const CORS = "https://cors-anywhere.herokuapp.com/";
-export const LIMIT = 25;
 
 export let Yelp = {
   search: async (term, location, sortBy, latitude, longitude, offset) => {
@@ -18,7 +16,11 @@ export let Yelp = {
     try {
       const searchResponse = await fetch(
         `${CORS}https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&sort_by=${sortBy}&latitude=${latitude}&longitude=${longitude}&limit=${LIMIT}&offset=${offset}`,
-        { headers: { Authorization: `Bearer ${API_KEY}` } }
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.REACT_APP_YELP_API_KEY}`,
+          },
+        }
       );
 
       if (searchResponse.ok) {
