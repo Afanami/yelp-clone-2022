@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { sortByOptions } from "../../Utils/Yelp";
 import "./SearchBar.css";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import useLocalStorage from "../../Hooks/useLocalStorage";
 
 export default function SearchBar({ lat, long, searchYelp }) {
@@ -107,7 +107,6 @@ export default function SearchBar({ lat, long, searchYelp }) {
 
   return (
     <div className="SearchBar">
-      <Toaster />
       <div className="SearchBar-sort-options">
         <ul>{renderSortByOptions()}</ul>
       </div>
